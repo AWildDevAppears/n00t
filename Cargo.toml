@@ -1,0 +1,10 @@
+[package]
+name = "n00t"
+version = "0.1.0"
+authors = ["Josh Burgess <jburgess@whiteoctober.co.uk>"]
+
+[dependencies]
+ncurses = "5.97.0"
+rust-crypto = "0.2.36"
+flate2 = "1.0.4"
+tar = "0.4.20"
