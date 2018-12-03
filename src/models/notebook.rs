@@ -23,7 +23,13 @@ impl Notebook {
 
         return titles;
     }
+
+    // get the body content of a specific note in markdown format
+    // pub fn get_note_body(&self, note: String) -> Option<&String> {
+    //     return self.notes.get(&note);
+    // }
 }
+
 // Gets a new notebook of the note archive
 pub fn get_notebook(p: &str) -> Result<Notebook, Error> {
     let path = Path::new(p);
