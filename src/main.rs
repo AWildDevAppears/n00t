@@ -7,16 +7,16 @@ mod models;
 fn main() {
     initscr();
 
-
     match models::notebook::get_notebook("./notebook.tar") {
-        Ok(v) => {
-            printw(&*v.name);
+        Ok(notebook) => {
+            for title in notebook.get_note_titles() {
+                printw(title);
+            }
             refresh();
         },
         Err(err) => println!("{}", err),
     }
 
-
-	getch();
-	endwin();
+    getch();
+    endwin();
 }

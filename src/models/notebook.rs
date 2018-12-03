@@ -9,10 +9,21 @@ use std::collections::HashMap;
 
 pub struct Notebook {
     pub name: String,
-    pub notes: HashMap<String, String>,
+    notes: HashMap<String, String>,
     // is_encrypted: bool,
 }
 
+impl Notebook {
+    // Get a list of the titles of all of the notes within this notebook
+    pub fn get_note_titles(&self) -> Vec<&String> {
+        let mut titles = vec![];
+        for (title, _) in &self.notes {
+            titles.push(title);
+        }
+
+        return titles;
+    }
+}
 // Gets a new notebook of the note archive
 pub fn get_notebook(p: &str) -> Result<Notebook, Error> {
     let path = Path::new(p);
