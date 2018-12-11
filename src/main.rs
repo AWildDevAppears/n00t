@@ -1,5 +1,3 @@
-#![feature(box_syntax)]
-
 extern crate ncurses;
 
 use ncurses::*;
@@ -8,8 +6,17 @@ mod models;
 
 fn main() {
     initscr();
-    cbreak();
+    raw();
+
+    keypad(stdscr(), true);
     noecho();
+
+    curs_set(CURSOR_VISIBILITY::CURSOR_INVISIBLE);
+    refresh();
+
+    let mut max_x = 0;
+    let mut max_y = 0;
+    getmaxyx(stdscr(), &mut max_y, &mut max_x);
 
     match models::notebook::get_notebook("./notebook.tar") {
         Ok(notebook) => {
@@ -23,12 +30,14 @@ fn main() {
 }
 
 fn create_menu(notebook: models::notebook::Notebook) {
-    let menu_window = newwin(10, 70, 5, 5);
-    box(menu_window, 0 , 0);
+    let win = newwin(70, 30, 0, 0);
+    wprintw(win, "\n");
 
     for title in notebook.get_note_titles() {
-        printw(title);
+        wprintw(win, "  ");
+        wprintw(win, title);
+        wprintw(win, "\n");
     }
 
-    wrefresh(menu_window);
+    wrefresh(win);
 }
