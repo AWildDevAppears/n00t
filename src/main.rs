@@ -18,11 +18,14 @@ fn main() {
     let mut max_y = 0;
     getmaxyx(stdscr(), &mut max_y, &mut max_x);
 
+    let gutter = 2;
+
     match models::notebook::get_notebook("./notebook.tar") {
         Ok(notebook) => {
             let body = notebook.get_note_body(String::from("myNotebook/hello.md"));
-            create_menu(notebook);
-            create_body(body);
+
+            create_menu(notebook, max_y - 2, max_x / 5);
+            create_body(body, max_y - 2 , max_x - gutter - (max_x / 5), (max_x / 5) + gutter);
 
         },
         Err(err) => println!("{}", err),
@@ -32,9 +35,9 @@ fn main() {
     endwin();
 }
 
-fn create_menu(notebook: models::notebook::Notebook) {
-    let outer_win = newwin(70, 33,1, 2);
-    let win = newwin(66, 30, 3, 4);
+fn create_menu(notebook: models::notebook::Notebook, height: i32, width: i32) {
+    let outer_win = newwin(height, width, 1, 2);
+    let win = newwin(height - 4, width - 4, 3, 4);
 
     box_(outer_win, 0, 0);
     wrefresh(outer_win);
@@ -47,9 +50,9 @@ fn create_menu(notebook: models::notebook::Notebook) {
     wrefresh(win);
 }
 
-fn create_body(body: String) {
-    let outer_win = newwin(70, 110, 1, 35);
-    let win = newwin(66, 100, 3, 40);
+fn create_body(body: String, height: i32, width: i32, offset: i32) {
+    let outer_win = newwin(height, width, 1, offset);
+    let win = newwin(height - 4 , width - 5, 3, offset + 4);
 
     box_(outer_win, 0, 0);
     wrefresh(outer_win);
