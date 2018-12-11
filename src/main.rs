@@ -33,7 +33,11 @@ fn main() {
 }
 
 fn create_menu(notebook: models::notebook::Notebook) {
-    let win = newwin(70, 30, 1, 2);
+    let outer_win = newwin(70, 33,1, 2);
+    let win = newwin(66, 30, 3, 4);
+
+    box_(outer_win, 0, 0);
+    wrefresh(outer_win);
 
     for title in notebook.get_note_titles() {
         wprintw(win, title);
@@ -44,7 +48,11 @@ fn create_menu(notebook: models::notebook::Notebook) {
 }
 
 fn create_body(body: String) {
-    let win = newwin(70, 100, 1, 30);
+    let outer_win = newwin(70, 110, 1, 35);
+    let win = newwin(66, 100, 3, 40);
+
+    box_(outer_win, 0, 0);
+    wrefresh(outer_win);
 
     wprintw(win, &body);
     wrefresh(win);
