@@ -20,7 +20,10 @@ fn main() {
 
     match models::notebook::get_notebook("./notebook.tar") {
         Ok(notebook) => {
+            let body = notebook.get_note_body(String::from("myNotebook/hello.md"));
             create_menu(notebook);
+            create_body(body);
+
         },
         Err(err) => println!("{}", err),
     }
@@ -30,14 +33,19 @@ fn main() {
 }
 
 fn create_menu(notebook: models::notebook::Notebook) {
-    let win = newwin(70, 30, 0, 0);
-    wprintw(win, "\n");
+    let win = newwin(70, 30, 1, 2);
 
     for title in notebook.get_note_titles() {
-        wprintw(win, "  ");
         wprintw(win, title);
         wprintw(win, "\n");
     }
 
+    wrefresh(win);
+}
+
+fn create_body(body: String) {
+    let win = newwin(70, 100, 1, 30);
+
+    wprintw(win, &body);
     wrefresh(win);
 }

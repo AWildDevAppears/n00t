@@ -25,9 +25,14 @@ impl Notebook {
     }
 
     // get the body content of a specific note in markdown format
-    // pub fn get_note_body(&self, note: String) -> Option<&String> {
-    //     return self.notes.get(&note);
-    // }
+    pub fn get_note_body(&self, note: String) -> String {
+        let body = match self.notes.get(&note) {
+            Some(body) => body.clone(),
+            None => String::new(),
+        };
+
+        return body;
+    }
 }
 
 // Gets a new notebook of the note archive
